@@ -1,146 +1,155 @@
 [
     {
-        "id": 1778687247183.0007,
+        "id": 1778704978755.7158,
         "nome": "Vitamina C 1g",
         "lote": "V1111",
         "quantidade": 100,
-        "validade": "01/12/2026",
+        "validade": "2026-12-01",
         "preco": "199.99",
         "fornecedor": "FarmaTeste"
     },
     {
-        "id": 1778687247183.6328,
+        "id": 1778704978755.4163,
         "nome": "Soro Fisiológico 500ml",
         "lote": "S1212",
         "quantidade": "",
-        "validade": "18/09/2026",
+        "validade": "2026-09-18",
         "preco": "7.50",
         "fornecedor": "JP Pharma"
     },
     {
-        "id": 1778687247183.1565,
+        "id": 1778704978755.5652,
         "nome": "Dipirona 500mg",
         "lote": "D1001",
         "quantidade": 20,
-        "validade": "10/01/2025",
+        "validade": "2025-01-10",
         "preco": "12.50",
         "fornecedor": "EMS"
     },
     {
-        "id": 1778687247183.6602,
+        "id": 1778704978755.3394,
         "nome": "Paracetamol 750mg",
         "lote": "P2002",
         "quantidade": 15,
-        "validade": "25/02/2025",
+        "validade": "2025-02-25",
         "preco": "9.90",
         "fornecedor": "Neo Química"
     },
     {
-        "id": 1778687247183.1868,
+        "id": 1778704978755.1782,
         "nome": "Amoxicilina 500mg",
         "lote": "A3003",
         "quantidade": 8,
-        "validade": "05/03/2025",
+        "validade": "2025-03-05",
         "preco": "27.80",
         "fornecedor": "Medley"
     },
     {
-        "id": 1778687247183.4753,
+        "id": 1778704978755.028,
         "nome": "Ibuprofeno 600mg",
         "lote": "I4004",
         "quantidade": 30,
-        "validade": "20/04/2026",
+        "validade": "2026-04-20",
         "preco": "18.70",
         "fornecedor": "Eurofarma"
     },
     {
-        "id": 1778687247183.9216,
+        "id": 1778704978755.5874,
         "nome": "Omeprazol 20mg",
         "lote": "O5005",
         "quantidade": 12,
-        "validade": "28/04/2026",
+        "validade": "2026-04-28",
         "preco": "16.40",
         "fornecedor": "Cimed"
     },
     {
-        "id": 1778687247183.7842,
+        "id": 1778704978755.189,
         "nome": "Loratadina 10mg",
         "lote": "L6006",
         "quantidade": 25,
-        "validade": "05/05/2026",
+        "validade": "2026-05-05",
         "preco": "14.20",
         "fornecedor": "Aché"
     },
     {
-        "id": 1778687247183.39,
+        "id": 1778704978755.6504,
         "nome": "Azitromicina 500mg",
         "lote": "AZ7007",
         "quantidade": 10,
-        "validade": "15/08/2026",
+        "validade": "2026-08-15",
         "preco": "32.90",
         "fornecedor": "Sandoz"
     },
     {
-        "id": 1778687247183.6716,
+        "id": 1778704978755.3318,
         "nome": "Nimesulida 100mg",
         "lote": "N8008",
         "quantidade": 18,
-        "validade": "22/11/2026",
+        "validade": "2026-11-22",
         "preco": "11.30",
         "fornecedor": "Legrand"
     },
     {
-        "id": 1778687247183.8872,
+        "id": 1778704978755.2456,
         "nome": "Cetoconazol Creme",
         "lote": "C9009",
         "quantidade": 6,
-        "validade": "10/02/2027",
+        "validade": "2027-02-10",
         "preco": "21.75",
         "fornecedor": "Cristália"
     },
     {
-        "id": 1778687247183.8425,
+        "id": 1778704978755.603,
         "nome": "Ranitidina 150mg",
         "lote": "R1010",
         "quantidade": 40,
-        "validade": "30/06/2027",
+        "validade": "2027-06-30",
         "preco": "19.99",
         "fornecedor": "Teuto"
     },
     {
-        "id": 1778687247183.5842,
+        "id": 1778704978755.093,
         "nome": "Hércules",
         "lote": "V4SC0",
         "quantidade": 1,
-        "validade": "15/09/2099",
+        "validade": "2099-09-15",
         "preco": "999999999999.99",
         "fornecedor": "Minha Mãe"
     },
     {
-        "id": 1778687247183.5283,
+        "id": 1778704978755.7236,
         "nome": "teste",
         "lote": "12313",
         "quantidade": 1,
-        "validade": "12/12/2000",
+        "validade": "2000-12-12",
         "preco": "1312.31",
         "fornecedor": "teste"
     },
     {
-        "id": 1778687247183.9233,
+        "id": 1778704978755.6382,
         "nome": "durante",
         "lote": "terdr",
         "quantidade": 886,
-        "validade": "12/12/3333",
+        "validade": "3333-12-12",
         "preco": "1233.33",
         "fornecedor": "tetet"
     },
     {
-        "id": 1778703839549,
+        "id": 1778704978755.507,
         "nome": "OTAVIOO",
         "lote": "OTAVIOO",
         "quantidade": "2",
         "validade": "2026-05-14",
         "preco": "250",
         "fornecedor": "OTAVIOO"
+    },
+    {
+        "id": 1778705003791,
+        "nome": "BRENO",
+        "lote": "BRENO",
+        "quantidade": "1",
+        "validade": "2027-06-20",
+        "preco": "20",
+        "fornecedor": "BRENO"
     }
 ]
