@@ -133,5 +133,14 @@
         "validade": "12/12/3333",
         "preco": "1233.33",
         "fornecedor": "tetet"
+    },
+    {
+        "id": 1778703839549,
+        "nome": "OTAVIOO",
+        "lote": "OTAVIOO",
+        "quantidade": "2",
+        "validade": "2026-05-14",
+        "preco": "250",
+        "fornecedor": "OTAVIOO"
     }
 ]
