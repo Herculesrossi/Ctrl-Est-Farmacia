@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -182,13 +183,16 @@ public class FarmaciaApp extends JFrame {
         table.setFillsViewportHeight(true);
         table.setRowHeight(24);
 
-        DefaultTableCellRenderer base = (DefaultTableCellRenderer) table.getDefaultRenderer(Object.class);
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        TableCellRenderer expirationRenderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(
                     JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
-                Component c = base.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (column == 3 && value instanceof LocalDate d) {
+                    setText(d.format(FMT));
+                }
 
                 int modelRow = table.convertRowIndexToModel(row);
                 Medicamento m = tableModel.getAt(modelRow);
@@ -211,18 +215,11 @@ public class FarmaciaApp extends JFrame {
 
                 return c;
             }
-        });
+        };
 
-        table.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            protected void setValue(Object value) {
-                if (value instanceof LocalDate d) {
-                    setText(d.format(FMT));
-                } else {
-                    setText(value == null ? "" : value.toString());
-                }
-            }
-        });
+        for (int col = 0; col < table.getColumnCount(); col++) {
+            table.getColumnModel().getColumn(col).setCellRenderer(expirationRenderer);
+        }
 
         sorter.setComparator(3, (a, b) -> {
             LocalDate da = (LocalDate) a;
@@ -561,29 +558,36 @@ public class FarmaciaApp extends JFrame {
         try {
             String json = Files.readString(f.toPath(), StandardCharsets.UTF_8);
             Object rootObj = JsonMini.parse(json);
-            if (!(rootObj instanceof Map<?, ?> root)) throw new IllegalArgumentException("JSON raiz inválido");
 
-            Object itemsObj = root.get("items");
-            if (!(itemsObj instanceof List<?> items)) throw new IllegalArgumentException("Campo 'items' inválido");
+            List<?> items;
+            boolean legacyArrayFormat = false;
+            if (rootObj instanceof Map<?, ?> root) {
+                Object itemsObj = root.get("items");
+                if (!(itemsObj instanceof List<?> list)) {
+                    throw new IllegalArgumentException("Campo 'items' inválido");
+                }
+                items = list;
+            } else if (rootObj instanceof List<?> list) {
+                items = list;
+                legacyArrayFormat = true;
+            } else {
+                throw new IllegalArgumentException("JSON raiz inválido");
+            }
 
             List<Medicamento> novos = new ArrayList<>();
             for (Object it : items) {
                 if (!(it instanceof Map<?, ?> m)) continue;
-
-                String nome = asString(m.get("nome"));
-                String lote = asString(m.get("lote"));
-                int qtd = asInt(m.get("quantidade"));
-                LocalDate validade = LocalDate.parse(asString(m.get("validade")), FMT);
-                BigDecimal preco = new BigDecimal(asString(m.get("preco"))).setScale(2, RoundingMode.HALF_UP);
-                String fornecedor = asString(m.get("fornecedor"));
-
-                novos.add(new Medicamento(nome, lote, qtd, validade, preco, fornecedor));
+                novos.add(parseMedicamentoFromJsonMap(m));
             }
 
             tableModel.setAll(novos);
             aplicarFiltro();
             atualizarContadores();
             table.repaint();
+
+            if (legacyArrayFormat) {
+                salvarJSONAtomico(false);
+            }
 
             if (mostrarMensagem) {
                 JOptionPane.showMessageDialog(this, "Carregado de: " + DEFAULT_JSON);
@@ -595,6 +599,23 @@ public class FarmaciaApp extends JFrame {
         }
     }
 
+    private static Medicamento parseMedicamentoFromJsonMap(Map<?, ?> m) {
+        String nome = asString(m.get("nome"));
+        String lote = asString(m.get("lote"));
+        int qtd = asInt(m.get("quantidade"));
+        LocalDate validade = parseValidade(asString(m.get("validade")));
+        BigDecimal preco = parsePreco(asString(m.get("preco"))).setScale(2, RoundingMode.HALF_UP);
+        String fornecedor = asString(m.get("fornecedor"));
+        return new Medicamento(nome, lote, qtd, validade, preco, fornecedor);
+    }
+
+    private static LocalDate parseValidade(String raw) {
+        String s = raw == null ? "" : raw.trim();
+        if (s.isEmpty()) throw new DateTimeParseException("Validade vazia", s, 0);
+        if (s.contains("/")) return LocalDate.parse(s, FMT);
+        return LocalDate.parse(s);
+    }
+
     private static String asString(Object o) {
         return o == null ? "" : o.toString();
     }
@@ -602,7 +623,9 @@ public class FarmaciaApp extends JFrame {
     private static int asInt(Object o) {
         if (o instanceof Number n) return n.intValue();
         if (o == null) return 0;
-        return Integer.parseInt(o.toString());
+        String s = o.toString().trim();
+        if (s.isEmpty()) return 0;
+        return Integer.parseInt(s);
     }
 
     // Legacy CSV parsing (one-time migration only)
